@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Menstruation Calculator</title>
+	<link rel='stylesheet' type='text/css' href='jquery-ui.css'></link>
+	<script src="jquery-1.10.2.js"></script>
+	<script src="jquery-ui.js"></script>
+	<script src="dayPick.js"></script>	
+	<script type="text/javascript" language="JavaScript1.2" charset="utf-8">
+
+		function isValidDate(dateStr) 
+		{
+			var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{4})$/; // requires 4 digit year
+			var matchArray = dateStr.match(datePat); // is the format ok?
+			
+			if (matchArray == null) 
+			{
+				alert("Date is not in a valid format.")
+				return false;
+			}
+
+			month = matchArray[1]; // parse date into variables
+			day = matchArray[3];
+			year = matchArray[4];
+			
+			if (month < 1 || month > 12) 
+			{ // check month range
+				alert("Month must be between 1 and 12.");
+				return false;
+			}
+			
+			if (day < 1 || day > 31)
+			{
+				alert("Day must be between 1 and 31.");
+				return false;
+			}
+			
+			if ((month==4 || month==6 || month==9 || month==11) && day==31)
+			{
+				alert("Month "+month+" doesn't have 31 days!")
+				return false;
+			}
+			
+			if (month == 2) 
+			{ // check for february 29th
+				var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+				if (day>29 || (day==29 && !isleap)) 
+				{
+					alert("February " + year + " doesn't have " + day + " days!");
+					return false;
+				}
+			}
+			
+			return true;
+		}
+
+		function dispDate(dateObj) 
+		{
+			day   = dateObj.getDate();
+			day = (day < 10) ? "0" + day : day;
+			
+			month = dateObj.getMonth()+1;
+			month = (month < 10) ? "0" + month : month;
+
+			year  = dateObj.getYear();
+			if (year < 2000) year += 1900;
+
+			return (month + "/" + day + "/" + year);
+		}
+
+		function menstrualCalc(menstrualform) 
+		{
+			menstrual = new Date(); // creates new date objects
+			ovulation = new Date();
+			ovstart = new Date();
+			ovend = new Date();
+			duedate = new Date();
+			today = new Date();
+			cycle = 0; // sets variables to invalid state ==> 0
+
+			if (isValidDate(menstrualform.menstrual.value)) 
+			{ // Validates menstrual date 
+				menstrualinput = new Date(menstrualform.menstrual.value);
+				menstrual.setTime(menstrualinput.getTime())
+			}
+			else return false; // otherwise exits
+
+			cycle = (menstrualform.cycle.value == "" ? 28 : menstrualform.cycle.value); // defaults to 28
+			// validates cycle range, from 22 to 45
+			if (menstrualform.cycle.value != "" && (menstrualform.cycle.value < 22 || menstrualform.cycle.value > 45)) 
+			{
+				alert("Your cycle length is either too short or too long for \n"
+				+ "calculations to be very accurate!  We will still try to \n"
+				+ "complete the calculation with the figure you entered. ");
+			}
+
+			// sets ovulation date to menstrual date + cycle days - 14 days
+			// the '*86400000' is necessary because date objects track time
+			// in milliseconds;  86400000 milliseconds equals one day
+			ovulation.setTime(menstrual.getTime() + (cycle*86400000) - (13*86400000));
+			menstrualform.conception.value = dispDate(ovulation);
+	
+			ovstart.setTime(ovulation.getTime() - (5*86400000));
+			menstrualform.ovstart.value = dispDate(ovstart);
+
+			ovend.setTime(ovulation.getTime() + (5*86400000));
+			menstrualform.ovend.value = dispDate(ovend);
+
+			// sets due date to ovulation date plus 266 days
+			duedate.setTime(menstrual.getTime() + (cycle*86400000) + (1*86400000));
+			menstrualform.duedate.value = dispDate(duedate);
+
+			return false; // form should never submit, returns false
+		}
+		//  End -->
+	</script> 
+	
+</head>
+
+<body>
+
+	<form onsubmit="return menstrualCalc(this);" action="" id="preg-calc">
+      <fieldset id="ovul_calc"> <legend>WOMEN Cyclelator</legend>
+			<ol>
+              <li>
+                      <label for="menstrual">
+                      <strong class="required">*</strong>
+                      First Day of Last Menstrual Period:
+                      <span class="hint">first day of bleeding</span><span class="hint"><em>Required</em></span>
+                      </label>
+                      
+                      <script type="text/javascript">
+                          $(function() {
+                              $('#menstrual').datepicker({});
+                          });
+                          </script>
+                      
+                      <script type="text/javascript">
+                      function changevalue(a){
+                         $("#"+a).attr("value","");
+                         $("#"+a).removeClass("hint-value");
+                      }
+                      function unhide(a,b){
+                          $("#"+a).attr("class",b);
+                      }
+                      </script>
+                      
+                      <input name="menstrual" id="menstrual" class="hint-value" value="MM/DD/YYYY" class="medium" size="12" maxlength="10" type="text" onfocus="changevalue('menstrual')" />
+              </li>
+              
+              
+              
+               <li>
+                     <label for="cycle">Average Length of Cycles:
+                                          <span class="hint">From first day of your period to the <br />first day of your 
+                                          next period.</span>
+                                          <span class="hint">Ranges from: 22 to 44. Default = 28</span>
+                                          <span class="hint"><em>Optional:</em> Use 28 if your aren't sure with it.</span></label>
+                     <input name="cycle" id="cycle" value="28" class="small" size="2" maxlength="2" type="text" />
+              
+              </li>
+            </ol>
+              <button id="calc_button" value="Calculate!" type="submit" onclick="unhide('results','normal')">Calculate!</button> 
+     </fieldset>      
+           
+           
+     
+     
+      <fieldset id="results" class="hide">   
+      <legend>Results</legend>      
+          <ol>
+              <li>
+                  <label for="ovstart">Estimated Fertility Window:<span class="hint" style="text-align:right; padding-right: 5px;">from:</span></label>
+                  <input name="ovstart" id="ovstart" value="" class="medium" size="12" type="text" />
+              </li> 
+              <li>
+                  <label><span class="hint" style="text-align:right; padding-right: 5px;">to: </span></label>
+                  <input name="ovend" id="ovend" value="" class="medium" size="12" type="text" />
+              </li>
+              <li>
+                  <label for="conception">Estimated Ovulation Day:</label>
+                  <input name="conception" id="conception" value="" class="medium" size="12" type="text" />
+              </li>      
+              <li>   
+                  <label for="duedate">Estimated Next Menstrual Cycle: <span class="hint"></span></label>
+                  <input name="duedate" id="duedate" value="" class="medium" size="12" type="text" />
+              </li>
+          </ol>        
+      </fieldset>
+</form>
+
+<p>Click <a href="index.html"> Update Calendar</a> for menstruation reminder</p>
+<p>OR</p>
+<p>Click <a href="http://www.kisreminder.com">here</a> to write</p>
+		  
+<p>This is not a diagnosis.  The calculations that are provided are estimates based on
+		  averages.</p>
+			 	
+</body>
+	
+</html>
