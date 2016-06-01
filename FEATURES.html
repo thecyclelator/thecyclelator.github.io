@@ -15,22 +15,22 @@
   <link rel="stylesheet" href="assets/mobirise/css/style.css">
   <link rel="stylesheet" href="assets/dropdown-menu-plugin/style.css">
   <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-  
-  
-  
+
+
+
 </head>
 <body>
 <section id="dropdown-menu-2btn-22">
 
     <nav class="navbar navbar-dropdown navbar-fixed-top">
-    
+
         <div class="container">
 
             <div class="navbar-brand">
-                <a href="HOME.html" class="navbar-logo"><img src="assets/images/unnamed-1-300x300-24.png" alt="Mobirise" title="HOME"></a> 
+                <a href="HOME.html" class="navbar-logo"><img src="assets/images/unnamed-1-300x300-24.png" alt="Mobirise" title="HOME"></a>
                 <a class="text-white" href="file:///C:/Users/win8/Desktop/design/HOME.html">WOMEN CYCLELATOR</a>
             </div>
-            
+
             <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                 ☰
             </button>
@@ -45,9 +45,9 @@
 
 <section class="engine"><a rel="external" href="https://mobirise.com">website builder mac</a></section><section class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--full-height mbr-section--bg-adapted mbr-parallax-background mbr-after-navbar" id="header2-23" style="background-image: url(assets/images/vintage-wallpaper-a3a-1440x900-11.jpg);">
     <div class="mbr-box__magnet mbr-box__magnet--sm-padding mbr-box__magnet--center-center">
-        
+
         <div class="mbr-box__container mbr-section__container container">
-            <div class="mbr-box mbr-box--stretched"><div class="mbr-box__magnet mbr-box__magnet--center-center">		
+            <div class="mbr-box mbr-box--stretched"><div class="mbr-box__magnet mbr-box__magnet--center-center">
 				<div class="row"><div class=" col-sm-8 col-sm-offset-2">
 <head>
 <body>
@@ -56,15 +56,15 @@
 	<link rel='stylesheet' type='text/css' href='jquery-ui.css'></link>
 	<script src="jquery-1.10.2.js"></script>
 	<script src="jquery-ui.js"></script>
-	<script src="dayPick.js"></script>	
+	<script src="dayPick.js"></script>
 	<script type="text/javascript" language="JavaScript1.2" charset="utf-8">
 
-		function isValidDate(dateStr) 
+		function isValidDate(dateStr)
 		{
 			var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{4})$/; // requires 4 digit year
 			var matchArray = dateStr.match(datePat); // is the format ok?
-			
-			if (matchArray == null) 
+
+			if (matchArray == null)
 			{
 				alert("Date is not in a valid format.")
 				return false;
@@ -73,43 +73,43 @@
 			month = matchArray[1]; // parse date into variables
 			day = matchArray[3];
 			year = matchArray[4];
-			
-			if (month < 1 || month > 12) 
+
+			if (month < 1 || month > 12)
 			{ // check month range
 				alert("Month must be between 1 and 12.");
 				return false;
 			}
-			
+
 			if (day < 1 || day > 31)
 			{
 				alert("Day must be between 1 and 31.");
 				return false;
 			}
-			
+
 			if ((month==4 || month==6 || month==9 || month==11) && day==31)
 			{
 				alert("Month "+month+" doesn't have 31 days!")
 				return false;
 			}
-			
-			if (month == 2) 
+
+			if (month == 2)
 			{ // check for february 29th
 				var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-				if (day>29 || (day==29 && !isleap)) 
+				if (day>29 || (day==29 && !isleap))
 				{
 					alert("February " + year + " doesn't have " + day + " days!");
 					return false;
 				}
 			}
-			
+
 			return true;
 		}
 
-		function dispDate(dateObj) 
+		function dispDate(dateObj)
 		{
 			day   = dateObj.getDate();
 			day = (day < 10) ? "0" + day : day;
-			
+
 			month = dateObj.getMonth()+1;
 			month = (month < 10) ? "0" + month : month;
 
@@ -119,7 +119,7 @@
 			return (month + "/" + day + "/" + year);
 		}
 
-		function menstrualCalc(menstrualform) 
+		function menstrualCalc(menstrualform)
 		{
 			menstrual = new Date(); // creates new date objects
 			ovulation = new Date();
@@ -129,8 +129,8 @@
 			today = new Date();
 			cycle = 0; // sets variables to invalid state ==> 0
 
-			if (isValidDate(menstrualform.menstrual.value)) 
-			{ // Validates menstrual date 
+			if (isValidDate(menstrualform.menstrual.value))
+			{ // Validates menstrual date
 				menstrualinput = new Date(menstrualform.menstrual.value);
 				menstrual.setTime(menstrualinput.getTime())
 			}
@@ -138,7 +138,7 @@
 
 			cycle = (menstrualform.cycle.value == "" ? 28 : menstrualform.cycle.value); // defaults to 28
 			// validates cycle range, from 22 to 45
-			if (menstrualform.cycle.value != "" && (menstrualform.cycle.value < 22 || menstrualform.cycle.value > 45)) 
+			if (menstrualform.cycle.value != "" && (menstrualform.cycle.value < 22 || menstrualform.cycle.value > 45))
 			{
 				alert("Your cycle length is either too short or too long for \n"
 				+ "calculations to be very accurate!  We will still try to \n"
@@ -150,7 +150,7 @@
 			// in milliseconds;  86400000 milliseconds equals one day
 			ovulation.setTime(menstrual.getTime() + (cycle*86400000) - (13*86400000));
 			menstrualform.conception.value = dispDate(ovulation);
-	
+
 			ovstart.setTime(ovulation.getTime() - (5*86400000));
 			menstrualform.ovstart.value = dispDate(ovstart);
 
@@ -164,8 +164,8 @@
 			return false; // form should never submit, returns false
 		}
 		//  End -->
-	</script> 
-</body>	
+	</script>
+</body>
 </head>
 
 <body>
@@ -179,13 +179,13 @@
                       First Day of Last Menstrual Period:
                       <span class="hint">first day of bleeding</span><span class="hint"><em>Required</em></span>
                       </label>
-                      
+
                       <script type="text/javascript">
                           $(function() {
                               $('#menstrual').datepicker({});
                           });
                           </script>
-                      
+
                       <script type="text/javascript">
                       function changevalue(a){
                          $("#"+a).attr("value","");
@@ -195,35 +195,35 @@
                           $("#"+a).attr("class",b);
                       }
                       </script>
-                      
+
                       <input name="menstrual" id="menstrual" class="hint-value" value="MM/DD/YYYY" class="medium" size="12" maxlength="10" type="text" onfocus="changevalue('menstrual')" />
               </li>
-              
-              
-              
+
+
+
                <li>
                      <label for="cycle">Average Length of Cycles:
-                                          <span class="hint">From first day of your period to the <br />first day of your 
+                                          <span class="hint">From first day of your period to the <br />first day of your
                                           next period.</span>
                                           <span class="hint">Ranges from: 22 to 44. Default = 28</span>
                                           <span class="hint"><em>Optional:</em> Use 28 if your aren't sure with it.</span></label>
                      <input name="cycle" id="cycle" value="28" class="small" size="2" maxlength="2" type="text" />
-              
+
               </li>
             </ol>
-              <button id="calc_button" value="Calculate!" type="submit" onclick="unhide('results','normal')">Calculate!</button> 
-     </fieldset>      
-           
-           
-     
-     
-      <fieldset id="results" class="hide">   
-      <legend>Results</legend>      
+              <button id="calc_button" value="Calculate!" type="submit" onclick="unhide('results','normal')">Calculate!</button>
+     </fieldset>
+
+
+
+
+      <fieldset id="results" class="hide">
+      <legend>Results</legend>
           <ol>
               <li>
                   <label for="ovstart">Estimated Fertility Window:<span class="hint" style="text-align:right; padding-right: 5px;">from:</span></label>
                   <input name="ovstart" id="ovstart" value="" class="medium" size="12" type="text" />
-              </li> 
+              </li>
               <li>
                   <label><span class="hint" style="text-align:right; padding-right: 5px;">to: </span></label>
                   <input name="ovend" id="ovend" value="" class="medium" size="12" type="text" />
@@ -231,37 +231,37 @@
               <li>
                   <label for="conception">Estimated Ovulation Day:</label>
                   <input name="conception" id="conception" value="" class="medium" size="12" type="text" />
-              </li>      
-              <li>   
+              </li>
+              <li>
                   <label for="duedate">Estimated Next Menstrual Cycle: <span class="hint"></span></label>
                   <input name="duedate" id="duedate" value="" class="medium" size="12" type="text" />
               </li>
-          </ol>        
+          </ol>
       </fieldset>
 </form>
 
-<p>Click <a href="index.html"> Update Calendar</a> for menstruation reminder</p>
+<p>Click <a href="home1.html"> Update Calendar</a> for menstruation reminder</p>
 <p>OR</p>
 <p>Click <a href="http://www.kisreminder.com">here</a> for email notification reminder</p>
-		  
+
 <p>This is not a diagnosis.  The calculations that are provided are estimates based on
 		  averages.</p>
-			 	
+
 </body>
-				
-				  <div class="mbr-hero animated fadeInUp">                        
-                        
+
+				  <div class="mbr-hero animated fadeInUp">
+
                     </div>
-                    
+
                 </div></div>
             </div></div>
         </div>
-        
+
     </div>
 </section>
 
 <section class="mbr-section mbr-section--relative mbr-section--fixed-size" id="contacts1-26" style="background-color: rgb(60, 60, 60);">
-    
+
     <div class="mbr-section__container container">
         <div class="mbr-contacts mbr-contacts--wysiwyg row" style="padding-top: 45px; padding-bottom: 45px;">
             <div class="col-sm-4">
@@ -285,7 +285,7 @@ Phone: 016-3489729<br></p>
 </section>
 
 <footer class="mbr-section mbr-section--relative mbr-section--fixed-size" id="footer1-27" style="background-color: rgb(68, 68, 68);">
-    
+
     <div class="mbr-section__container container">
         <div class="mbr-footer mbr-footer--wysiwyg row" style="padding-top: 36.900000000000006px; padding-bottom: 36.900000000000006px;">
             <div class="col-sm-12">
@@ -302,7 +302,7 @@ Phone: 016-3489729<br></p>
   <script src="assets/jarallax/jarallax.js"></script>
   <script src="assets/mobirise/js/script.js"></script>
   <script src="assets/dropdown-menu-plugin/script.js"></script>
-  
-  
+
+
 </body>
 </html>
